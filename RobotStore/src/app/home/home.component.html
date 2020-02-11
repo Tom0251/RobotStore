@@ -1,0 +1,44 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand text-white">Robot Store</a>
+    <a class="navbar-brand text-white">Hello {{ user.fullName }}</a>
+    <button class="btn btn-danger my-2 my-sm-0" (click)="onLogout()">Logout</button>
+</nav>
+
+<div *ngIf="robots">
+    <table class='table table-striped' aria-labelledby="tableLabel">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Description</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let robot of robots">
+                <td><img [src]="robot.image"></td>
+                <td>{{ robot.designation }}</td>
+                <td>{{ robot.price }}</td>
+                <td *ngIf="user.isAdmin">
+                    <span *ngIf="confirmDelete">
+                        <span>Are you sure you want to Delete ?</span>
+                        <button class="btn btn-danger" (click)="DeleteRobot(robot.id)">Yes</button>
+                        <button class="btn btn-danger" (click)="confirmDelete = false">No</button>
+                    </span>
+                    <button class="btn btn-danger my-2 my-sm-0" (click)="confirmDelete=true">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- <div class="form-group col-md-8 offset-md-2">
+    <a href="./home/robot"><button class="btn btn-lg btn-block">Add Robot</button></a>
+</div> -->
+<div class="form-group col-md-8 offset-md-2" *ngIf="user.isAdmin">
+    <button type="submit" class="btn btn-lg" (click)="addRobot()">Add Robot</button>
+</div>
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <router-outlet></router-outlet>
+    </div>
+</div>
